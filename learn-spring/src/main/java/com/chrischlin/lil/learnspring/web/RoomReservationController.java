@@ -27,6 +27,7 @@ public class RoomReservationController {
         var date = dateUtils.createDateFromDateString(dateString);
         var roomReservations = reservationService.getRoomReservationsForDate(date);
         model.addAttribute("roomReservations", roomReservations);
-        return "roomres";
+        // Return the template page name
+        return "roomRes";
     }
 }

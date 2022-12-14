@@ -9,6 +9,8 @@ import com.chrischlin.lil.learnspring.data.RoomRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -62,6 +64,21 @@ public class ReservationService {
             return o1.getRoomName().compareTo(o2.getRoomName());
         });
         return roomReservations;
+    }
+
+    public List<Guest> getSortedGuests() {
+        ArrayList<Guest> ret = new ArrayList<>();
+        for (var g : guestRepository.findAll()) {
+            ret.add(g);
+        }
+        ret.sort((a, b) -> {
+            if (a.getLastName().equals(b.getLastName())) {
+                return a.getFirstName().compareTo(b.getFirstName());
+            }
+            return a.getLastName().compareTo(b.getLastName());
+        });
+
+        return ret;
     }
 }
 
