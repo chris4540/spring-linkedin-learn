@@ -10,25 +10,26 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.sql.Date;
+
 @Getter
 @Setter
 @ToString
 @Entity
-@Table(name="ROOM")
-public class Room {
+@Table(name="RESERVATION")
+public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="ROOM_ID")
+    @Column(name="RESERVATION_ID")
     private long id;
 
-    @Column(name="NAME")
-    private String name;
+    @Column(name="ROOM_ID")
+    private long roomId;
 
-    @Column(name="ROOM_NUMBER")
-    private String roomNumber;
+    @Column(name="GUEST_ID")
+    private long guestId;
 
-    @Column(name="BED_INFO")
-    private String bedInfo;
-
+    @Column(name="RES_DATE")
+    private Date resDate;
 }
