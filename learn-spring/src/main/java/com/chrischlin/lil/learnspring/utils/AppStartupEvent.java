@@ -1,37 +1,31 @@
 package com.chrischlin.lil.learnspring.utils;
 
-import com.chrischlin.lil.learnspring.data.GuestRepository;
-import com.chrischlin.lil.learnspring.data.ReservationRepository;
-import com.chrischlin.lil.learnspring.data.RoomRepository;
+import com.chrischlin.lil.learnspring.business.ReservationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class AppStartupEvent implements ApplicationListener<ApplicationReadyEvent> {
-    private final RoomRepository roomRepository;
-    private final GuestRepository guestRepository;
-    private final ReservationRepository reservationRepository;
-
+    private final ReservationService reservationService;
+    private final DateUtils dateUtils;
 
     private static final Logger logger = LoggerFactory.getLogger("AppStartupEvent");
 
-    public AppStartupEvent(RoomRepository roomRepo,
-                           GuestRepository guestRepo,
-                           ReservationRepository resRepo) {
-        this.roomRepository = roomRepo;
-        this.guestRepository = guestRepo;
-        this.reservationRepository = resRepo;
+    public AppStartupEvent(ReservationService reservationService, DateUtils dateUtils) {
+        this.reservationService = reservationService;
+        this.dateUtils = dateUtils;
     }
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        roomRepository.findAll().forEach(o -> logger.info(o.toString()));
-        logger.info("-----------------------");
-        guestRepository.findAll().forEach(o -> logger.info(o.toString()));
-        logger.info("-----------------------");
-        reservationRepository.findAll().forEach(o -> logger.info(o.toString()));
+        Date date = dateUtils.createDateFromDateString("2022-01-01");
+        var reservations =
+            reservationService.getRoomReservationsForDate(date);
+        reservations.forEach(o -> logger.info(o.toString()));
     }
 }
