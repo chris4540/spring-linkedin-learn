@@ -1,8 +1,6 @@
 package com.chrischlin.lil.learnspring.web;
 
 import com.chrischlin.lil.learnspring.business.ReservationService;
-import com.chrischlin.lil.learnspring.data.Guest;
-import com.chrischlin.lil.learnspring.data.GuestRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +18,7 @@ public class GuestsController {
 
     @GetMapping
     public String getGuests(Model model) {
-        model.addAttribute("guests", reservationService.getSortedGuests());
+        model.addAttribute("guests", reservationService.getAllGuests(true));
         return "guests";
     }
 }
